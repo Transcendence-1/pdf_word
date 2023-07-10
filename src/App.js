@@ -1,23 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import { PDFDocument } from 'pdf-lib';
 
 function App() {
+  const handleConvert = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    try {
+      const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
+      const wordBytes = await pdfDoc.saveAsBase64();
+      
+      // Send the converted Word file bytes to the server for saving or further processing
+      
+      console.log('Conversion success!');
+    } catch (error) {
+      console.error('Conversion error:', error);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type='file' onChange={handleConvert} /><br />
+      <button>Convert</button>
     </div>
   );
 }
