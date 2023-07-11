@@ -10,8 +10,7 @@ function App() {
     try {
       const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
       const wordBytes = await pdfDoc.saveAsBase64();
-      
-      // Send the converted Word file bytes to the server for saving or further processing
+    
       
       console.log('Conversion success!');
     } catch (error) {
